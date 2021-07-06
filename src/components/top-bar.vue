@@ -19,7 +19,7 @@ export default {
         position: absolute;
         top: 0;
         left: 0;
-        height: 75px;
+        height: 70px;
         width: 100%;
         background: rgb(44, 140, 179);
         color: white;
@@ -34,7 +34,7 @@ export default {
         right: 50%; */
         font-size: 22px;
         transform: translate(-5px, 0px);
-        margin: 12px 0px;
+        margin-top: 6px;
     }
     .logo{
         margin-right: 1rem;

@@ -1,5 +1,5 @@
 <template>
-  <div class="todo-list">
+  <div class="todo-list pt-2">
     <h1>This is the Todo List page</h1>
   </div>
 </template>
