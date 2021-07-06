@@ -48,7 +48,7 @@ export default {
         };
     },
     methods: {
-        RegisterNewUser (){
+        async RegisterNewUser (){
             firebase
             .auth()
             .createUserWithEmailAndPassword(this.register_form.email, this.register_form.password)
@@ -74,8 +74,8 @@ export default {
                 //     console.log('Save Worked');
                 // }).catch(error => {
                 //     console.log('Save failed' + error);
-                // });
-                this.$router.push("/todo");
+                // });             
+                this.$router.push("/todo")
             })
             .catch((error) => {
                 console.log('Error creating new user:', error);

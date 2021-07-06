@@ -72,7 +72,7 @@ export default {
             this.login_form.password
           );
         console.log(user);
-        this.$router.push("/");
+        this.$router.push("/todo");
       } catch (error) {
         console.log(error);
         alert(error);
