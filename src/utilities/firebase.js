@@ -4,13 +4,12 @@ import "firebase/auth";
 import "firebase/storage";
 
 const firebaseConfig = {
-    apiKey: process.env.VUE_APP_FB_API,
-    authDomain: process.env.VUE_APP_FB_DOMAIN,
-    databaseURL: process.env.VUE_APP_FB_DBURL,
-    projectId: process.env.VUE_APP_FB_PROJ_ID,
-    storageBucket: process.env.VUE_APP_FB_STOR_BUCK,
-    messagingSenderId: process.env.VUE_APP_FB_MESS_SEND_ID,
-    appId: process.env.VUE_APP_FB_APP_ID
+    apiKey: "AIzaSyABJePhxxo3W52UUKzzkcI6B3MxM__7294",
+    authDomain: "fire-todo-list-2a94b.firebaseapp.com",
+    projectId: "fire-todo-list-2a94b",
+    storageBucket: "fire-todo-list-2a94b.appspot.com",
+    messagingSenderId: "467882020049",
+    appId: "1:467882020049:web:46d17cbd94f8caff0809f0"
   };
 
 firebase.initializeApp(firebaseConfig);

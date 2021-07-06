@@ -33,7 +33,7 @@
 </template>
 
 <script>
-// import firebase from "../utilities/firebase";
+import firebase from "../utilities/firebase";
 
 export default {
   props: ['socket', 'authUser'],
@@ -48,35 +48,35 @@ export default {
   },
 
   created() {
-    // firebase.auth().onAuthStateChanged((userAuth) => {
-    //   if (userAuth) {
-    //     firebase
-    //       .auth()
-    //       .currentUser.getIdTokenResult()
-    //       .then((tokenResult) => {
-    //         console.log(tokenResult.claims);
-    //       }).catch(error => {
-    //         alert(error);
-    //       });
-    //   }
-    // });
+    firebase.auth().onAuthStateChanged((userAuth) => {
+      if (userAuth) {
+        firebase
+          .auth()
+          .currentUser.getIdTokenResult()
+          .then((tokenResult) => {
+            console.log(tokenResult.claims);
+          }).catch(error => {
+            alert(error);
+          });
+      }
+    });
   },
 
   methods: {
     async loginButtonPressed() {
-      // try {
-      //   const { user } = await firebase
-      //     .auth()
-      //     .signInWithEmailAndPassword(
-      //       this.login_form.email,
-      //       this.login_form.password
-      //     );
-      //   console.log(user);
-      //   this.$router.push("/");
-      // } catch (error) {
-      //   console.log(error);
-      //   alert(error);
-      // }
+      try {
+        const { user } = await firebase
+          .auth()
+          .signInWithEmailAndPassword(
+            this.login_form.email,
+            this.login_form.password
+          );
+        console.log(user);
+        this.$router.push("/");
+      } catch (error) {
+        console.log(error);
+        alert(error);
+      }
     },
   },
 };

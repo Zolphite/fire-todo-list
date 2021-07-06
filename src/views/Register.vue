@@ -34,7 +34,7 @@
 </template>
 
 <script>
-// import firebase from '../utilities/firebase'
+import firebase from '../utilities/firebase'
 
 export default {
     props:['is_signed_in','authUser'],
@@ -49,37 +49,38 @@ export default {
     },
     methods: {
         RegisterNewUser (){
-            // firebase
-            // .auth()
-            // .createUserWithEmailAndPassword(this.register_form.email, this.register_form.password)
-            // .then((userRecord) => {
-            //     // See the UserRecord reference doc for the contents of userRecord.
-            //     console.log('Successfully created new user:', userRecord.uid);
-            //     userRecord.user.updateProfile({
-            //         displayName: this.register_form.username
-            //     });
+            firebase
+            .auth()
+            .createUserWithEmailAndPassword(this.register_form.email, this.register_form.password)
+            .then((userRecord) => {
+                // See the UserRecord reference doc for the contents of userRecord.
+                // ERROR: Fix uid custom claim
+                console.log('Successfully created new user:', userRecord.uid);
+                userRecord.user.updateProfile({
+                    displayName: this.register_form.username
+                });
 
-            //     const extra_user_data = {'uid': userRecord.user.uid, 
-            //                             'displayName': this.register_form.username, 
-            //                             'description': null,
-            //                             'profile_image': null}
+                // const extra_user_data = {'uid': userRecord.user.uid, 
+                //                         'displayName': this.register_form.username, 
+                //                         'description': null,
+                //                         'profile_image': null}
                                         
-            //     console.log(extra_user_data);
-            //     // convert your object into a JSON-string
-            //     var jsonString = JSON.stringify(extra_user_data);
-            //     // create a Blob from the JSON-string
-            //     var new_blob = new Blob([jsonString], {type: "application/json"})
-            //     firebase.storage().ref('users/' + userRecord.user.uid + '/profileData.json').put(new_blob).then(function () {
-            //         console.log('Save Worked');
-            //     }).catch(error => {
-            //         console.log('Save failed' + error);
-            //     });
-            //     this.$router.push("/");
-            // })
-            // .catch((error) => {
-            //     console.log('Error creating new user:', error);
-            //     alert(error);
-            // });
+                // console.log(extra_user_data);
+                // convert your object into a JSON-string
+                // var jsonString = JSON.stringify(extra_user_data);
+                // create a Blob from the JSON-string
+                // var new_blob = new Blob([jsonString], {type: "application/json"})
+                // firebase.storage().ref('users/' + userRecord.user.uid + '/profileData.json').put(new_blob).then(function () {
+                //     console.log('Save Worked');
+                // }).catch(error => {
+                //     console.log('Save failed' + error);
+                // });
+                this.$router.push("/todo");
+            })
+            .catch((error) => {
+                console.log('Error creating new user:', error);
+                alert(error);
+            });
         }
     }
 }
