@@ -5,7 +5,7 @@
             <router-link to="/">Home</router-link> |
             <router-link to="/todo">Todo</router-link>
             <div v-if="is_signed_in == true" class="display-hud text-capitalize">
-                welcome: {{authUser.displayName}}
+                welcome {{username}}
             </div>
             <a v-if="is_signed_in == true" class="logout-btn text-capitalize" @click="LogoutUser">
                     Log Out
@@ -27,11 +27,11 @@
 import firebase from '../utilities/firebase'
 
 export default {
-    props: ['is_signed_in','authUser'],
+    props: ['is_signed_in','authUser', 'username'],
     methods: {
         LogoutUser () {
             firebase.auth().signOut().then(() => {
-                console.log('Logged out');
+                // console.log('Logged out');
                 this.$router.push("/login");
             }).catch((error) => {
                 console.log(error);

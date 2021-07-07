@@ -48,22 +48,23 @@ export default {
   },
 
   created() {
-    firebase.auth().onAuthStateChanged((userAuth) => {
-      if (userAuth) {
-        firebase
-          .auth()
-          .currentUser.getIdTokenResult()
-          .then((tokenResult) => {
-            console.log(tokenResult.claims);
-          }).catch(error => {
-            alert(error);
-          });
-      }
-    });
+    // firebase.auth().onAuthStateChanged((userAuth) => {
+    //   if (userAuth) {
+    //     firebase
+    //       .auth()
+    //       .currentUser.getIdTokenResult()
+    //       .then((tokenResult) => {
+    //         console.log(tokenResult.claims);
+    //       }).catch(error => {
+    //         alert(error);
+    //       });
+    //   }
+    // });
   },
 
   methods: {
     async loginButtonPressed() {
+      // try to sign in user and report error if cannot sign in
       try {
         const { user } = await firebase
           .auth()

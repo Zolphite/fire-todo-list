@@ -6,15 +6,11 @@
 
 <script>
 export default {
-    mounted() {
-      // this.TestBackEnd();
-      this.test();
+    mounted(){
+
     },
     methods: {
-      test()
-      {
-        // document.location.reload()
-      }
+  
     }
 }
 </script>

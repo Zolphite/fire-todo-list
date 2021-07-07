@@ -1,6 +1,7 @@
 <template>
   <div id="nav">
-    <top-bar :authUser="authUser" :is_signed_in="is_signed_in"></top-bar>
+    <top-bar :authUser="authUser" :is_signed_in="is_signed_in"
+            :username="username"></top-bar>
   </div>
   <router-view/>
 </template>
@@ -17,6 +18,7 @@
     data () {
       return {
         is_signed_in: false,
+        username: null,
         authUser: {},
       }
     },
@@ -32,11 +34,13 @@
             console.log("Signed In")
             this.is_signed_in = true;
             this.authUser = user;
-            console.log(user.uid)
+            this.username = this.authUser.displayName;
+            console.log(user)
             // console.log(this.is_signed_in)
           } else {
             console.log("Signed Out")
             this.is_signed_in = false;
+            this.username == null;
             this.authUser = {};
             // console.log(this.is_signed_in)
           }
