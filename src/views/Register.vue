@@ -48,18 +48,7 @@ export default {
         };
     },
     created() {
-        // firebase.auth().onAuthStateChanged((userAuth) => {
-        //     if (userAuth) {
-        //         firebase
-        //         .auth()
-        //         .currentUser.getIdTokenResult()
-        //         .then((tokenResult) => {
-        //             console.log(tokenResult.claims);
-        //         }).catch(error => {
-        //             alert(error);
-        //         });
-        //     }
-        // });
+
     },
     methods: {
         async RegisterNewUser (){
