@@ -3,7 +3,16 @@
     <h3 class="py-3">
       Todo List
     </h3>
-    <div class="btn btn-outline-primary float-end mx-5 mb-2">Create New Task</div>
+    <!-- Start Create New Taks stuff -->
+    <div @click="is_creating_task = true;" class="btn btn-outline-primary float-end mx-5 mb-2">Create New Task</div>
+    <div v-if="is_creating_task == true" class="add-todo-module">
+      <div @click="is_creating_task = false;" class="add-todo-exit"><i class="exit-icon far fa-times-circle"></i></div>
+      <h4 class="text-white font-weight-bold mt-3">Enter TODO Task</h4>
+      <textarea v-model="newTask.desc" class="add-todo-text"></textarea>
+      <div @click="CreateNewTODOItem" class="add-todo-submit-btn btn btn-primary">Create Task</div>
+    </div>
+    <!-- End Create New Taks stuff -->
+    <!-- Start Table for displaying todo items -->
     <table id="todo-list-table" ref="todo" class="table table-striped" style="width:100%">
         <thead>
           <tr>
@@ -23,8 +32,8 @@
           </tr>
         </tbody>
     </table>
-    <div class="btm-padding">
-    </div>
+    <!-- End Table for displaying todo items -->
+    <div class="btm-padding"></div>
   </div>
 </template>
 
@@ -32,40 +41,17 @@
 export default {
   data () {
     return {
-      todoListItems: {
-        0: {
-          desc: 'Get food',
+      is_creating_task: false,
+      newTask: {
+        desc: null,
+        time: null
+      },
+      todoListItems: [
+        {
+          desc: 'Get Food',
           time: '2012'
         },
-        1: {
-          desc: 'Get water',
-          time: '2013'
-        },
-        2: {
-          desc: 'Get water',
-          time: '2013'
-        },
-        3: {
-          desc: 'Find watch',
-          time: '2015'
-        },
-        4: {
-          desc: 'Get water',
-          time: '2013'
-        },
-        5: {
-          desc: 'Get water',
-          time: '2013'
-        },
-        6: {
-          desc: 'Get water',
-          time: '2013'
-        },
-        7: {
-          desc: 'Get water',
-          time: '2013'
-        },
-      },
+      ],
     }
   },
   mounted(){
@@ -75,12 +61,110 @@ export default {
     // document.getElementById('todo-list-table').DataTable();
   },
   methods: {
+    // Create new TODO List task and add it to other tasks
+    CreateNewTODOItem(){
+      console.log("Create Todo Item");
+      console.log(this.newTask.desc);
 
+      const curTime = new Date()
+      const date = curTime.getFullYear()+'-'+(curTime.getMonth()+1)+'-'+curTime.getDate()
+      const time = curTime.getHours() + ":" + curTime.getMinutes() + ":" + curTime.getSeconds();
+      const convTime = this.convertTime(time);
+      console.log(convTime)
+      this.newTask.time = date + ' ' + convTime;
+      const newItem = { ...this.newTask};
+      this.todoListItems.unshift(newItem);
+
+
+      this.newTask.desc = null;
+      this.newTask.time = null;
+      this.is_creating_task = false;
+    },
+    convertTime(input){
+      var time = input; // your input
+
+      time = time.split(':'); // convert to array
+
+      // fetch
+      var hours = Number(time[0]);
+      var minutes = Number(time[1]);
+      var seconds = Number(time[2]);
+
+      // calculate
+      var timeValue;
+
+      if (hours > 0 && hours <= 12) {
+        timeValue= "" + hours;
+      } else if (hours > 12) {
+        timeValue= "" + (hours - 12);
+      } else if (hours == 0) {
+        timeValue= "12";
+      }
+      
+      timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes;  // get minutes
+      timeValue += (seconds < 10) ? ":0" + seconds : ":" + seconds;  // get seconds
+      timeValue += (hours >= 12) ? " P.M." : " A.M.";  // get AM/PM
+
+      // show
+      // console.log(timeValue);
+      return timeValue;
+    }
   }
 }
 </script>
 
 <style>
+.add-todo-module{
+  background: rgb(93, 178, 211);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 50%;
+  border-radius: 12px;
+}
+
+.add-todo-text {
+  position: absolute;
+  top: 15%;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  text-align: center;
+  padding: 22px;
+}
+
+.add-todo-submit-btn {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 2%;
+  transform: translate(-50%, 0);
+  font-size: 16px;
+}
+
+.add-todo-exit{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 5%;
+  height: 5%;
+  margin: 12px 12px;
+  color: rgb(255, 121, 121)!important;
+}
+
+.exit-icon{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.exit-icon:hover{
+  color: rgb(255, 0, 0)!important;
+  cursor: pointer;
+}
 .todo-item{
   width: 55%;
   text-align: left;
@@ -89,4 +173,7 @@ export default {
 .btm-padding {
   height: 100px;
 }
+
+
+
 </style>
