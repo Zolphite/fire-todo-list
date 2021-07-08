@@ -4,7 +4,9 @@
       Todo List
     </h3>
     <!-- Start Create New Taks stuff -->
-    <div @click="is_creating_task = true;" class="btn btn-outline-primary float-end mx-5 mb-2">Create New Task</div>
+    <div v-if="is_loading_tasks == false" @click="is_creating_task = true;" class="btn btn-outline-primary float-end mx-5 mb-2">Create New Task</div>
+    <div v-if="is_loading_tasks == true" >loading...<i  class="fas fa-spinner fa-pulse"></i></div>
+
     <div v-if="is_saving_tasks == true" >saving...<i  class="fas fa-spinner fa-pulse"></i></div>
     <div v-if="is_creating_task == true" class="add-todo-module">
       <div @click="is_creating_task = false;newTask.desc = null;" class="add-todo-exit"><i class="exit-icon far fa-times-circle"></i></div>
@@ -65,6 +67,7 @@ export default {
       todoListItems: [
       ],
       is_saving_tasks: false,
+      is_loading_tasks: false,
     }
   },
   mounted(){
@@ -135,6 +138,7 @@ export default {
     },
     loadTasksData()
     {
+      this.is_loading_tasks = true;
       firebase.storage().ref('users/' + this.authUser.uid + '/savedTask.json').getDownloadURL().then((savedDataURL) => {
         axios.get(savedDataURL)
         .then((response) => {
@@ -147,6 +151,7 @@ export default {
           {
             this.todoListItems = {};
           }
+          this.is_loading_tasks = false;
           // this.is_card_data_loaded = true;
           // this.checkForCardDisplay();
         });
@@ -154,6 +159,7 @@ export default {
       }).catch(error => {
         // this.is_card_data_loaded = true;
         console.log('Load failed' + error);
+        this.is_loading_tasks = false;
       })
     },
     // End Firebase save and load functions
