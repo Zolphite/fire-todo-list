@@ -20,7 +20,7 @@
                             <input class="xxl-inp" type="password" name="register-password" placeholder="password" v-model="register_form.password" required>
                         </div>
                         <div class="register-form-group">
-                            <button type="submit-register-form-actual" class="register-btn btn btn-primary text-white">Register Now</button>
+                            <button type="submit-register-form-actual" class="register-btn btn btn-primary">Register Now</button>
                         </div>
                         <p>
                             Already have an account? 
@@ -124,7 +124,9 @@ export default {
 .register-side > h1 {
     font-weight: bold;
 }
-
+.register-btn {
+  color: white!important;
+}
 /* Devices under 1600px (4k) */
 @media screen and (min-width: 1600px) {
     .register {
