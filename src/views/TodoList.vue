@@ -6,12 +6,19 @@
     <!-- Start Create New Taks stuff -->
     <div @click="is_creating_task = true;" class="btn btn-outline-primary float-end mx-5 mb-2">Create New Task</div>
     <div v-if="is_creating_task == true" class="add-todo-module">
-      <div @click="is_creating_task = false;" class="add-todo-exit"><i class="exit-icon far fa-times-circle"></i></div>
+      <div @click="is_creating_task = false;newTask.desc = null;" class="add-todo-exit"><i class="exit-icon far fa-times-circle"></i></div>
       <h4 class="text-white font-weight-bold mt-3">Enter TODO Task</h4>
       <textarea v-model="newTask.desc" class="add-todo-text"></textarea>
       <div @click="createNewTODOItem" class="add-todo-submit-btn btn btn-primary">Create Task</div>
     </div>
     <!-- End Create New Taks stuff -->
+    <!-- Edit Task Stuff -->
+    <div v-if="is_editing_task == true" class="add-todo-module">
+      <div @click="is_editing_task = false;edit_task_text = null;edit_target = null;" class="add-todo-exit"><i class="exit-icon far fa-times-circle"></i></div>
+      <h4 class="text-white font-weight-bold mt-3">Enter TODO Task</h4>
+      <textarea v-model="edit_task_text" class="add-todo-text"></textarea>
+      <div @click="finishEditTask" class="add-todo-submit-btn btn btn-primary">Create Task</div>
+    </div>
     <!-- Start Table for displaying todo items -->
     <table id="todo-list-table" ref="todo" class="table table-striped" style="width:100%">
         <thead>
@@ -26,7 +33,7 @@
             <th class="todo-item px-5">{{item.desc}}</th>
             <th>{{item.time}}</th>
             <th class="action-item">
-              <div class="btn btn-outline-success mx-2">Edit</div>
+              <div @click="startEditTask(index)" class="btn btn-outline-success mx-2">Edit</div>
               <div @click="deleteTodoItem(index)" class="btn btn-outline-danger mx-2">Delete</div>
             </th>
           </tr>
@@ -43,6 +50,9 @@ export default {
   data () {
     return {
       is_creating_task: false,
+      is_editing_task: false,
+      edit_task_text: null,
+      edit_target: null,
       newTask: {
         desc: null,
         time: null
@@ -81,6 +91,19 @@ export default {
       this.newTask.time = null;
       this.is_creating_task = false;
     },
+    // Edit Task Functions
+    startEditTask(index){
+      this.edit_target = index;
+      this.edit_task_text = this.todoListItems[index].desc;
+      this.is_editing_task = true;
+    },
+    finishEditTask(){
+      this.todoListItems[this.edit_target].desc = this.edit_task_text;
+      this.edit_target = null;
+      this.edit_task_text = null;
+      this.is_editing_task = false;
+    },
+    // End Edit Task Functions
     // Delte Todo List item
     deleteTodoItem(index){
       console.log(index);
