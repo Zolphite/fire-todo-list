@@ -19,7 +19,7 @@
                             <input class="xxl-inp" type="password" name="login-password" placeholder="Password" v-model="login_form.password" required>
                         </div>
                         <div class="login-form-group">
-                            <button type="submit-login-form-actual" class="login-btn btn btn-primary text-white">Login Now</button>
+                            <button type="submit-login-form-actual" class="login-btn btn btn-primary">Login Now</button>
                         </div>
                         <p>
                             Don't have an account? 
@@ -109,6 +109,9 @@ export default {
 }
 .login-form-group > input {
     margin: .9rem 0;
+}
+.login-btn {
+  color: white!important;
 }
 /* .border-warning {
     border-top: .3rem solid #ECA71E!important;
