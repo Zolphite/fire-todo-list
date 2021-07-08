@@ -26,7 +26,7 @@
 
 7) Visit "Running on URL" which should be http://127.0.0.1:5000/
 ```
-## Project setup
+<!-- ## Project setup
 ```
 npm install
 ```
@@ -47,4 +47,4 @@ npm run lint
 ```
 
 ### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+See [Configuration Reference](https://cli.vuejs.org/config/). -->
