@@ -9,7 +9,7 @@
       <div @click="is_creating_task = false;" class="add-todo-exit"><i class="exit-icon far fa-times-circle"></i></div>
       <h4 class="text-white font-weight-bold mt-3">Enter TODO Task</h4>
       <textarea v-model="newTask.desc" class="add-todo-text"></textarea>
-      <div @click="CreateNewTODOItem" class="add-todo-submit-btn btn btn-primary">Create Task</div>
+      <div @click="createNewTODOItem" class="add-todo-submit-btn btn btn-primary">Create Task</div>
     </div>
     <!-- End Create New Taks stuff -->
     <!-- Start Table for displaying todo items -->
@@ -22,17 +22,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in todoListItems" :key="item">
+          <tr v-for="(item, index) in todoListItems" :key="item">
             <th class="todo-item px-5">{{item.desc}}</th>
             <th>{{item.time}}</th>
             <th class="action-item">
               <div class="btn btn-outline-success mx-2">Edit</div>
-              <div class="btn btn-outline-danger mx-2">Delete</div>
+              <div @click="deleteTodoItem(index)" class="btn btn-outline-danger mx-2">Delete</div>
             </th>
           </tr>
         </tbody>
     </table>
     <!-- End Table for displaying todo items -->
+    <div v-if="todoListItems.length == 0">There are NO tasks.</div>
     <div class="btm-padding"></div>
   </div>
 </template>
@@ -62,9 +63,9 @@ export default {
   },
   methods: {
     // Create new TODO List task and add it to other tasks
-    CreateNewTODOItem(){
+    createNewTODOItem(){
       console.log("Create Todo Item");
-      console.log(this.newTask.desc);
+      // console.log(this.newTask.desc);
 
       const curTime = new Date()
       const date = curTime.getFullYear()+'-'+(curTime.getMonth()+1)+'-'+curTime.getDate()
@@ -80,6 +81,12 @@ export default {
       this.newTask.time = null;
       this.is_creating_task = false;
     },
+    // Delte Todo List item
+    deleteTodoItem(index){
+      console.log(index);
+      this.todoListItems.splice(index, 1);
+    },
+    // Convert military time to standard time.
     convertTime(input){
       var time = input; // your input
 
