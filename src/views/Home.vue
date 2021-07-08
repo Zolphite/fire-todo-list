@@ -8,5 +8,9 @@
 <script>
 export default {
   name: 'Home',
+  props: ['authUser'],
+  mounted() {
+    this.$router.push('Todo'); 
+  }
 }
 </script>

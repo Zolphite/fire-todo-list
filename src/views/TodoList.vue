@@ -5,6 +5,7 @@
     </h3>
     <!-- Start Create New Taks stuff -->
     <div @click="is_creating_task = true;" class="btn btn-outline-primary float-end mx-5 mb-2">Create New Task</div>
+    <div v-if="is_saving_tasks == true" >saving...<i  class="fas fa-spinner fa-pulse"></i></div>
     <div v-if="is_creating_task == true" class="add-todo-module">
       <div @click="is_creating_task = false;newTask.desc = null;" class="add-todo-exit"><i class="exit-icon far fa-times-circle"></i></div>
       <h4 class="text-white font-weight-bold mt-3">Enter TODO Task</h4>
@@ -46,7 +47,11 @@
 </template>
 
 <script>
+import firebase from '../utilities/firebase'
+import axios from 'axios'
+
 export default {
+  props: ['authUser'],
   data () {
     return {
       is_creating_task: false,
@@ -58,11 +63,8 @@ export default {
         time: null
       },
       todoListItems: [
-        {
-          desc: 'Get Food',
-          time: '2012'
-        },
       ],
+      is_saving_tasks: false,
     }
   },
   mounted(){
@@ -70,6 +72,7 @@ export default {
     //   console.log(this.$refs.myid)
     // });
     // document.getElementById('todo-list-table').DataTable();
+    this.loadTasksData()
   },
   methods: {
     // Create new TODO List task and add it to other tasks
@@ -86,7 +89,7 @@ export default {
       const newItem = { ...this.newTask};
       this.todoListItems.unshift(newItem);
 
-
+      this.saveTaskData();
       this.newTask.desc = null;
       this.newTask.time = null;
       this.is_creating_task = false;
@@ -99,6 +102,7 @@ export default {
     },
     finishEditTask(){
       this.todoListItems[this.edit_target].desc = this.edit_task_text;
+      this.saveTaskData();
       this.edit_target = null;
       this.edit_task_text = null;
       this.is_editing_task = false;
@@ -108,7 +112,51 @@ export default {
     deleteTodoItem(index){
       console.log(index);
       this.todoListItems.splice(index, 1);
+      this.saveTaskData();
     },
+    // Start Firebase save and load functions
+    saveTaskData(){
+      this.is_saving_tasks = true;
+      const processed_task_data = {'tasks': this.todoListItems}
+      console.log(processed_task_data);
+      // convert your object into a JSON-string
+      var jsonString = JSON.stringify(processed_task_data);
+      // create a Blob from the JSON-string
+      var new_blob = new Blob([jsonString], {type: "application/json"})
+      firebase.storage().ref('users/' + this.authUser.uid + '/savedTask.json').put(new_blob).then(() => {
+        this.is_saving_tasks = false;
+        // this.resetAddCardDisplay()
+        console.log('Save Worked');
+      }).catch(error => {
+        console.log('Save failed' + error);
+        this.is_saving_tasks = false;
+        // this.resetAddCardDisplay()
+      })
+    },
+    loadTasksData()
+    {
+      firebase.storage().ref('users/' + this.authUser.uid + '/savedTask.json').getDownloadURL().then((savedDataURL) => {
+        axios.get(savedDataURL)
+        .then((response) => {
+          console.log(response.data)
+          if(response.data.tasks != undefined)
+          {
+            this.todoListItems = response.data.tasks;
+          }
+          else 
+          {
+            this.todoListItems = {};
+          }
+          // this.is_card_data_loaded = true;
+          // this.checkForCardDisplay();
+        });
+        console.log('Profile Tasks Load Worked');
+      }).catch(error => {
+        // this.is_card_data_loaded = true;
+        console.log('Load failed' + error);
+      })
+    },
+    // End Firebase save and load functions
     // Convert military time to standard time.
     convertTime(input){
       var time = input; // your input
@@ -203,7 +251,4 @@ export default {
 .btm-padding {
   height: 100px;
 }
-
-
-
 </style>

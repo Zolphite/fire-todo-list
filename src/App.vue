@@ -3,7 +3,7 @@
     <top-bar :authUser="authUser" :is_signed_in="is_signed_in"
             :username="username"></top-bar>
   </div>
-  <router-view/>
+  <router-view :authUser="authUser" />
 </template>
 
 <script>

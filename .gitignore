@@ -1,7 +1,9 @@
+# Firebase Stuff
+firebase_cors.json
+
 .DS_Store
 node_modules
 /dist
-
 
 # local env files
 .env.local

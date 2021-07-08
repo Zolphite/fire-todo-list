@@ -2,7 +2,7 @@
     <div class="top-bar">
         <div class="title"><i class="fas fa-tasks logo"></i>Fire TODO List</div>
         <div class="nav-links">
-            <router-link to="/">Home</router-link> |
+            <!-- <router-link to="/">Home</router-link> | -->
             <router-link to="/todo">Todo</router-link>
             <div v-if="is_signed_in == true" class="display-hud text-capitalize">
                 welcome {{username}}
